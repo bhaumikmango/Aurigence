@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Course Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #5773ef 0%, #a560e9 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+/* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;            
+            margin-bottom: 30px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #dcf8f8, #f6dbfb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .collaboration-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        .accreditation {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .accreditation h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+/* Course Grid */
+        .courses-section {
+            margin-top: 40px;
+        }
+        .section-title {
+            text-align: center;
+            color: rgb(25, 25, 38);
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .course-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .course-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .course-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .enroll-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .enroll-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+/* Course Detail Page */
+        .course-detail {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .course-detail.active {
+            display: block;
+        }
+        .course-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .course-detail-image {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .course-info {
+            flex: 1;
+        }
+        .course-detail-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .course-duration {
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .detail-section {
+            margin: 30px 0;
+        }
+        .detail-section h3 {
+            color: #2c3e50;
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        .detail-section p, .detail-section ul {
+            color: #666;
+            line-height: 1.8;
+        }
+        .detail-section ul {
+            margin-left: 20px;
+        }
+        .detail-section li {
+            margin-bottom: 8px;
+        }
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit);
+            gap: 20px;
+        }
+        .module-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        .module-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .back-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #7f8c8d;
+        }
+
+        /* Updated Payment Button Style */
+        
+        .payment-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Matches existing enroll-btn */
+            color: white;
+            border: none;
+            padding: 12px 30px; /* Matches existing enroll-btn */
+            border-radius: 25px; /* Matches existing enroll-btn */
+            font-size: 16px; /* Matches existing enroll-btn */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Matches existing enroll-btn hover shadow */
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-5px); /* Matches existing enroll-btn hover transform */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow for detail page button on hover */
+        }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logo-section {
+        flex-direction: column;
+        gap: 20px;
+        }
+    .logo {
+        width: 100px;
+        height: 100px;
+        font-size: 20px;
+    }
+    .collaboration-text {
+        font-size: 24px;
+    }
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+    .course-header {
+        flex-direction: column;
+    }
+    .course-detail-image {
+        width: 100%;
+    }
+    .container {
+        padding: 10px;
+    }
+}
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 24px;
+    }
+    .course-detail-title {
+        font-size: 24px;
+    }
+    .detail-section h3 {
+        font-size: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+                <div id="home-page">
+            <header>
+                <div class="logo-section">
+                    <img src="C:\\Users\\USER\\Desktop\\Aurigence Technologies\\Aurigence logo without background.png" alt="Aurigence Logo" class="logo">
+                    <span style="font-size: 35px; color: #3498db;">×</span>
+                    <img src="C:\\Users\\USER\\Desktop\\Aurigence Technologies\\skillsDA logo.png" alt="SkillsDA Logo" class="logo">
+                </div>
+                <div class="accreditation">
+                    <H2 style="display: block; margin: 0 auto;">Excellence in Professional Education</H2>
+                    <h2 style="display: block; margin: 0 auto;">AICTE Accredited Programs</h2>
+                    <img src="C:\\Users\\USER\\Desktop\\Aurigence Technologies\\AICTE Logo.png" alt="AICTE Logo" class="logo" style="display: block; margin: 0 auto; background: linear-gradient(45deg, #68fbfb, #e05df7);">
+                    <p>All our courses are accredited by the All India Council for Technical Education (AICTE), ensuring industry-recognized certification and quality education standards.</p>
+                </div>
+            </header>
+
+            <div class="courses-section">
+                <h2 class="section-title">Our Professional Courses</h2>
+                <div class="courses-grid" id="courses-grid">
+                                    </div>
+            </div>
+        </div>
+
+                <div id="course-details">
+                    </div>
+    </div>
+
+    <script>
+        // Course data
+        const courses = [
+            {
+                id: 1,
+                title: "Foundational Course in Cyber Security",
+                description: "Build fundamental cybersecurity skills and understanding of security principles.",
+                duration: "Total 45 Hours",
+                overview: "The Foundational Course in Cyber Security offers comprehensive knowledge and skills in network and information security, cyber threats, vulnerabilities, risk management and cyber security strategies for both beginners and professionals.",
+                scope: "Designed for beginners and IT professionals who want to enter the cybersecurity field. Perfect for those seeking to understand basic security concepts and practices.",
+                objectives: "Upskill to understand the Cyber Security fundamentals—specifically Application Security and Vulnerability Assessment through practical application of industry standard tools.",
+                prerequisites: "Basic computer literacy and internet familiarity. No prior cybersecurity experience required.",
+                technologies: ["ireshark","Nmap", "Metasploit", "Kali Linux", "Burp Suite", "OpenVAS", "Splunk"],
+                nos: "Foundation",
+                nsqf: "Level 4",
+                jobRoles: ["Security Analyst", "Information Security Specialist", "Network Security Administrator", "Security Operations Centre Analyst", "Penetration Tester"],
+                modules: [
+                    { name: "Module 1", desc: "Fundamentals of Cyber Security" },
+                    { name: "Module 2", desc: "Fundamentals of Networking - E learning" },
+                    { name: "Module 3", desc: "Basics of Security - E learning" },
+                    { name: "Module 4", desc: "Fundamentals of Access Management - E learning" },
+                    { name: "Module 5", desc: "Fundamentals of Incident Management & Response - E learning" },
+                    { name: "Module 6", desc: " Fundamentals of Security Operations - E learning" }
+                ],
+                outcomes: ["Core Principles - The cybersecurity principles like confidentiality. integrity, and availability (CIA) and provides an understanding of risk management practices.",
+                "Threats and Vulnerabilities - Identification and analysis of various cyber threats and vulnerabilities, including malware, phishing and social engineering attacks.", 
+                "Network Security - Fundamental network security concepts such as firewalls, intrusion detection/prevention systems and secure communication protocols", 
+                "Policies and Legal Aspects - The focus is on creating and executing robust cybersecurity policies, procedures, and incident response plans, while also comprehending the legal and ethical implications of cybersecurity, including data protection regulations and privacy laws.", 
+                "Practical Experience and Frameworks - Participants gain practical experience with security tools, learn about security frameworks, and understand the significance of security awareness and training programs in fostering a security-conscious culture."]
+            },
+            {
+                id: 2,
+                title: "InfoSec Management",
+                description: "Learn to strategically manage information security, governance, and compliance within an organization.",
+                duration: "Total 45 Hours",
+                overview: "InfoSec Management is the strategic planning, coordination and direction of an organization's information security activities. including risk management, policy development, incident response, compliance, security awareness and technology integration, ensuring the protection of information assets.",
+                scope: "Upskill to understand infosec management students explore the fundamentals of Information Security Management providing them with a foundation to upskill themselves for specific Information Security management roles.",
+                objectives: "To develop information security management skills, understand governance frameworks, and prepare students for security leadership roles.",
+                prerequisites: "Information Security Management requires a relevant bachelor's degree, certifications (CISSP, CISM, etc.) experience, strong security knowledge and effective communication, leadership and problem-solving skills.",
+                technologies: ["ISO 27001", "NIST Framework", "COBIT", "Risk Management Tools", "Compliance Software", "Security Metrics"],
+                nos: "NO 901",
+                nsqf: "Level 5",
+                jobRoles: ["Chief Information Security Officer", "Security Architect", "Security Consultant", "Security Operations Manager", "Risk Manager"],
+                modules: [
+                    { name: "Module 1", desc: "Information Security Overview" },
+                    { name: "Module 2", desc: "Identifying the Threats and Vulnerabilities" },
+                    { name: "Module 3", desc: "Information security policies, procedures and guidelines" },
+                    { name: "Module 4", desc: "Application Security Testing Tools and information security systems using automated tools" },
+                    { name: "Module 5", desc: "Backup and Recovery, Verification and Audit" },
+                    { name: "Module 6", desc: "Testing Audit, Log Monitoring and Root Cause Analysis In Information Security" }
+                ],
+                outcomes: ["Risk assessment and management, focusing on identifying, assessing, prioritizing, and mitigating risks to information systems and data.", 
+                "Understand and Apply Security Compliance", "Design and Implement Security Incident Response Plans", 
+                "Business Continuity Planning (BCP) and Disaster Recovery (DR) involve the creation and maintenance of strategies to ensure the continuity of business operations in the event of disruption or disaster.", 
+                "Assessing and Reporting on Security Effectiveness"]
+            },
+            {
+                id: 3,
+                title: "Application Security - Vulnerability Assessments",
+                description: "Vulnerability Assessments: Master techniques for identifying and analyzing security vulnerabilities in applications.",
+                duration: "Total 45 Hours",
+                overview: "Application security involves protecting software applications from threats throughout their lifecycle, with vulnerability assessments being a crucial part of this process. Regular assessments help maintain robust security posture, comply with regulations, and safeguard sensitive data.",
+                scope: "Enable students to explore the fundamentals of Cyber Security to provide them with a base from where they can upskill themselves for specific Cyber Security job roles",
+                objectives: "To develop expertise in vulnerability assessment, understand assessment methodologies, and prepare students for security testing roles.",
+                prerequisites: "To effectively engage in Application Security and Vulnerability Assessments, one must have a foundational understanding of programming languages, networking, web technologies, operating systems, database management, security fundamentals, tools and platforms, and compliance with relevant standards like GDPR and HIPAA. This knowledge is crucial for successful application security assessments",
+                technologies: ["Nessus", "OpenVAS", "Burp Suite", "OWASP ZAP", "Metasploit", "Nmap", "Vulnerability Scanners"],
+                nos: "NO 909",
+                nsqf: "Level 5",
+                jobRoles: ["Application Security Testing", "Penetration Tester", "Risk assessment", "Security Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Threat Intelligence" },
+                    { name: "Module 2", desc: "Conducting Penetration Testing" },
+                    { name: "Module 3", desc: "Risk Assessment and Scoring" },
+                    { name: "Module 4", desc: "Threat Management" },
+                    { name: "Module 5", desc: "Data Collection and Analysis" },
+                    { name: "Module 6", desc: "Web application security" },
+                    { name: "Module 7", desc: "Web application security, VA and Audit trail"},
+                    { name: "Module 8", desc: "Web Application vulnerability analysis & patching"}
+                ],
+                outcomes: ["Understanding the threat landscape, identifying common threats and attack vectors that are relevant to applications", 
+                "The understanding of security controls, including encryption, authentication mechanisms, and access controls", 
+                "Vulnerability identification involves the use of various techniques, both manual and automated, to identify potential security vulnerabilities in applications", 
+                "The necessary compliance requirements and regulations related to application security", 
+                "The focus is on raising security awareness among stakeholders about the significance of application security and their respective roles in its maintenance", 
+                "Risk assessment involves evaluating the severity and impact of vulnerabilities based on their potential for exploitation", 
+                "The focus is on developing effective remediation strategies to address identified vulnerabilities", 
+                "Secure Development Practices involve integrating security into the software development lifecycle (SDLC) to prevent vulnerabilities from arising", 
+                "Responding to security incidents involving application vulnerabilities."]
+            },
+            {
+                id: 4,
+                title: "Application Security - Hardening and Deployment Configuration",
+                description: "Configure and secure applications and systems for robust, secure deployment.",
+                duration: "Total 45 hours",
+                overview: "Application Security Hardening and Deployment Configuration involves securing applications by minimizing vulnerabilities and ensuring safe deployment practices. This includes applying security best practices during the development, configuration and deployment phases.",
+                scope: "Upskill to understand how to secure applications by minimizing vulnerabilities and ensuring secure deployment, protecting the application and its data from threats.",
+                objectives: "Enables you to maintain confidentiality, Integrity and availability of the application any organization.",
+                prerequisites: "Understanding security principles, application architecture and vulnerabilities, combined with regular peer review. security testing. DevSecOps, compliance and training is essential for developing and deploying secure software.",
+                technologies: ["SAST", "DAST", "IAST", "SCA", "RASP", "Waratek", "Signal Sciences", "VulnerabilityScanners", "Nessus", "OpenVAS", "Qualys", "Container Security Tools", "Aqua Security", "Twistlock", "Clair", "ESLint", "Pylint", "Brakeman", "penetration testing tools", "Metasploit","Kali Linux", "Wireshark"],
+                nos: "N0910",
+                nsqf: "Level 5",
+                jobRoles: ["DevSecOps Engineer", "Security Architect", "Application Security Analyst", "Systems Security Engineer", "Security Consultant", "Cloud Security Engineer"],
+                modules: [
+                    { name: "Module 1", desc: "Application Security" },
+                    { name: "Module 2", desc: "Application Vulnerabilities" },
+                    { name: "Module 3", desc: "Application Hardening" },
+                    { name: "Module 4", desc: "Web Application Security" },
+                    { name: "Module 5", desc: "Security Technical Implementation Guides" },
+                    { name: "Module 6", desc: "Security & Patch Updates" },
+                    { name: "Module 7", desc: "Patch Management"},
+                    { name: "Module 8", desc: "Conclusion & Testing"}
+                ],
+                outcomes: ["Understand Fundamental Security Principles", 
+                "Secure Development Practices", 
+                "Application Hardening Techniques", 
+                "Security Testing Process", 
+                "Documentation and Communication of Security Practices"]
+            },
+            {
+                id: 5,
+                title: "Application Security - Monitoring and Mitigation",
+                description: "Implement tools and strategies to continuously monitor application security and mitigate threats.",
+                duration: "Total 45 Hours",
+                overview: "Application Security Monitoring and Mitigation involves continuous risk monitoring and mitigation in software applications to ensure confidentiality, integrity and availability. This includes regular assessments, code reviews and threat modeling throughout the application lifecycle.",
+                scope: "Upskill to understand the Application Security basics, focusing on Monitoring and Mitigation using industry-standard tools and methodologies.",
+                objectives: "To develop security monitoring skills, understand threat detection techniques, and prepare students for security operations roles.",
+                prerequisites: "Understanding security principles, compliance standards e.g. (GDPR, HIPAA) and secure coding practices (e.g. OWASP) along with experience in security tools and development frameworks. Students in technical fields and employees seeking career transition in Application Security Hardening and prospects in this growing field.",
+                technologies: ["Splunk", "ELK Stack", "Nagios", "Zabbix", "AppDynamics", "Prometheus"],
+                nos: "N0911",
+                nsqf: "Level 5",
+                jobRoles: ["Security Analyst", "SOC Analyst", "Incident Response Specialist", "Threat Hunter", "Security Operations Engineer"],
+                modules: [
+                    { name: "Module 1", desc: "Incident Handling and Telemetry" },
+                    { name: "Module 2", desc: "Asset management, Dato collection and Application monitoring" },
+                    { name: "Module 3", desc: "Security Information and Event Management" },
+                    { name: "Module 4", desc: "Log Management" },
+                    { name: "Module 5", desc: "Cyber security Incident management and time stamping" },
+                    { name: "Module 6", desc: "Event correlation, risk prioritization, traffic analysis" },
+                    { name: "Module 7", desc: "Service request management, Competency framework, APM"}
+                ],
+                outcomes: ["Understand application security threats like SQL Injection and XSS, implement preventive measures like input validation and secure coding practices, and adopt key security principles like least privilege.",
+                "Implement effective logging practices to monitor and detect security-relevant events, utilizing tools like SIEM and IDS for real-time threat detection and incident response.",
+                "Implement preventive measures like input validation and secure authentication and regularly conduct security testing, while also implementing reactive measures like incident response plans and patch management.",
+                "The SDLC should incorporate security practices. focusing on DevSecOps principles, and conduct threat modeling during the design phase to identify and mitigate potential security risks.", 
+                "Comply with regulatory standards like GDPR."]
+            },
+            {
+                id: 6,
+                title: "IOT Foundation Course",
+                description: "Get an introduction to the core concepts and components of the Internet of Things (IoT).",
+                duration: "Total 45 Hours",
+                overview: "The Foundational Curriculum for IOT is designed to upskill individuals and help them to learn IOT fundamentals. it consists of five modules: an introductory module and four modules focused on different layers of the IoT tech stack",
+                scope: " Enable students to explore the fundamentals of IoT, to provide them with a base from which they can upskill themselves for specific IoT job roles.",
+                objectives: "To provide foundational IoT knowledge, introduce IoT architectures, and prepare students for advanced IoT specializations.",
+                prerequisites: [" Familiarity with using at least one programming language, Basic understanding of sensors and microcontrollers"],
+                technologies: ['Raspberry Pi', 'Arduino', 'NFC', 'MQTT', 'CoAP', 'NB-IoT', 'Bluetooth/BLE', 'Zigbee', 'Mesh', 'Wi-Fi', 'Lora', '5G'],
+                nos: "Foundation Course",
+                nsqf: "Level 4",
+                jobRoles: ["IoT - Embedded Analyst", "IoT - Software Analyst", "IoT - Test Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Introduction to IoT concepts" },
+                    { name: "Module 2", desc: "IoT Devices" },
+                    { name: "Module 3", desc: "IoT Networking and Communication" },
+                    { name: "Module 4", desc: "IoT Data Storage and Analysis" },
+                    { name: "Module 5", desc: "IoT Security and Privacy" }
+                ],
+                outcomes: [
+                "Understand the Fundamentals of IoT - Grasp the basic concepts and definitions of the Internet of Things (IoT). Explain the evolution of IoT and its impact on various industries.",
+                "Identify Key Components and Technologies in IoT - Describe the role of sensors, actuators, and embedded systems in IoT. Understand the function of microcontrollers, gateways, and cloud platforms in IoT ecosystems.", 
+                "Understand IoT Communication Protocols - Identify and compare different IoT communication protocols such as MQTT, COAP, Bluetooth, Zigbee, and LoRaWAN. Determine the best communication protocol based on specific IoT application requirements", 
+                "Discuss the Role of Cloud Computing in IoT - Explain the different models of cloud computing (laaS, PaaS, SaaS) and their relevance to loT. Understand how cloud platforms support IoT data storage, processing and analytics.", 
+                "Role of Embedded Systems in IoT - Understand the importance of embedded systems as the core of lot devices. Discuss the integration of sensors. Microcontrollers and communication modules in embedded IoT devices",
+                "Explore the Future Trends and Challenges in IoT - Discuss emerging trends in IoT such as edge computing. Al integration, and 5G networks. Understand the potential challenges in scaling IoT solutions and the implications for future development."
+            ]
+            },
+            {
+                id: 7,
+                title: "Security Analyst - InfoSec Incident Response",
+                description: "Develop skills to effectively detect, analyze, and respond to information security incidents.",
+                duration: "Total 45 Hours",
+                overview: "A Security Analyst in InfoSec Incident Response manages and mitigates cybersecurity incidents, analyzing threats. responding to breaches, and developing prevention strategies. They collaborate with teams, maintain compliance records, and stay updated on security trends.",
+                scope: "A Security Analyst in InfoSec Incident Response is responsible for identifying. analyzing, and responding to security incidents to protect organizational data and systems, ensuring overall cybersecurity.",
+                objectives: "To develop incident response capabilities, understand forensics procedures, and prepare students for security analyst roles.",
+                prerequisites: "A Security Analyst in InfoSec Incident Response needs a relevant degree, certifications, technical skills, experience and strong analytical, communication, and problem-solving abilities, along with a willingness to work under pressure and stay updated on industry practices.",
+                technologies: ["Splunk", "LogRhythm", "CrowdStrike Falcon", "Carbon Black", "Snort", "Suricata", "Wireshark", "Tepdump", "OpenVAS", "Qualys", "Symantec Endpoint Protection", "McAfee Endpoint Security", "Graylog", "Nessus", "VirusTotal"],
+                nos: "N0902",
+                nsqf: "Level 5",
+                jobRoles: ["Incident Response Analyst", "Security Operations Center (SOC) Analyst", "Threat Intelligence Analyst", "Digital Forensics Analyst", "Malware Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Co-ordinating responses to information security incidents" },
+                    { name: "Module 2", desc: "Record, classify and prioritize information security incidents" },
+                    { name: "Module 3", desc: "Managing and Accessing previous information security incidents" },
+                    { name: "Module 4", desc: "Investigation Action on Information Security Incidents" },
+                    { name: "Module 5", desc: "Communication Prior and Post Incident" },
+                    { name: "Module 6", desc: "Incident Management" },
+                    { name: "Module 7", desc: "Documenting Security Incidents"}
+                ],
+                outcomes: ["Gain expertise in detecting and analyzing security incidents, using tools like IDS, IPS, and SIEM, and identify potential security breaches through log analysis", 
+                "Incident response planning involves understanding methodologies like NIST and SANS, developing and implementing response plans, and familiarizing oneself with communication protocols and escalation procedures during incidents", 
+                "Legal and regulatory compliance involves understanding GDPR and HIPAA requirements, data breach notification laws, compliance obligations, and industry standards for incident response", 
+                "The individual excels in collaboration and coordination, working effectively with cross-functional teams, external entities like law enforcement, and valuing information sharing within the cybersecurity community", 
+                "Continuous improvement involves staying updated on security trends, participating in regular training, and refining incident response processes based on lessons learned and emerging threats."]
+            },
+            {
+                id: 8,
+                title: "Security Analyst - InfoSec Audits Preparedness",
+                description: "Prepare for and conduct comprehensive information security audits to ensure compliance and identify weaknesses.",
+                duration: "Total 45 Hours",
+                overview: "A Security Analyst prepares organizations for InfoSec audits. Ensuring compliance with industry standards and regulatory requirements. They conduct regular assessments, identify vulnerabilities, recommend corrective actions, develop policies, train staff, and stay updated on threats.",
+                scope: "Upskills to understand the process of implementing policies and procedures to ensure that an organization's security mesures meet compliance standards",
+                objectives: "To develop security auditing skills, understand audit frameworks, and prepare students for security auditor roles, effectively safeguarding data and systems during audits.",
+                prerequisites: "A bachelor's degree in IT or Computer. Science is often required, along with skills in security standards, risk management, technical proficiency, and strong problem-solving, communication, and analytical abilities.",
+                technologies: ["Nessus", "Qualys", "OpenVAS", "Nmap", "BurpSuite", "Metasploit", "Wireshark", "Nikto", "Splunk", "ArcSight", "QRadar", "AlienVault", "LogRhythm", "Symantec Endpoint Protection", "McAfee Endpoint Security", "CrowdStrike Falcon", "McAfee"],
+                nos: "N0905",
+                nsqf: "Level 5",
+                jobRoles: ["Information Security Analyst", "IT Auditor & Cybersecurity Auditor", "Security Compliance Analyst", "Vulnerability Assessment Analyst", "Risk Management Analyst", "GRC Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Nature of Information Security Audits" },
+                    { name: "Module 2", desc: "Information Security Audit Guidelines" },
+                    { name: "Module 3", desc: "Information Security Audit Preparation" },
+                    { name: "Module 4", desc: "IS Audit standard templates and tools" },
+                    { name: "Module 5", desc: "Supporting auditors to carry out audit tasks" },
+                    { name: "Module 6", desc: "Audit review participation" },
+                    { name: "Module 7", desc: "IS compliance with organization's policies, standards, procedures, guidelines and checklists"}
+                ],
+                outcomes: ["Gain knowledge of relevant standards and regulations like ISO 27001, NIST, PCI-DSS, GDPR, HIPAA, and learn to map organizational policies to ensure compliance", 
+                "Mastering various risk assessment methodologies helps identify, analyze, and prioritize risks, while developing effective mitigation strategies addresses identified risks", 
+                "Develop skills in report writing and stakeholder communication to effectively communicate audit findings and recommendations to management and technical teams", 
+                "Ethical conduct and legal awareness are crucial in auditing, ensuring professional conduct and staying informed about legal requirements and implications related to information security and privacy", 
+                "Acquire technical knowledge in security technologies like firewalls, IDS/IPS, encryption, and endpoint protection, and learn vulnerability management to identify, assess, and remediate system and application vulnerabilities"]
+            },
+            {
+                id: 9,
+                title: "Foundation Course in BlockChain Technology",
+                description: "Understand the foundational concepts, principles, and applications of blockchain technology.",
+                duration: "Total 45 Hours",
+                overview: "The Foundation Course in Blockchain Technology is designed for learners with basic knowledge of databases and cryptography. It covers four modules —starting with an introduction to blockchain, followed by fundamentals of developing and implementing enterprise-level blockchain solutions.",
+                scope: "Enable learners to explore the fundamentals of blockchain",
+                objectives: "Provide a strong foundation to upskill for specific blockchain jobs",
+                prerequisites: "Familiarity with writing code using at least one programming language, Basic understanding of database structure and technology, Familiarity with traditional financial transactions, Basics of cryptography",
+                technologies: ["Truffle", "Solc", "Remix", "Infura", "Microsoft", "Azure", "SAP", "AWS"],
+                nos: "Foundation",
+                nsqf: "Level 4",
+                jobRoles: [" Blockchain Support Analyst", "Blockchain Test Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Introduction to Blockchain Technology" },
+                    { name: "Module 2", desc: "Blockchain Architecture" },
+                    { name: "Module 3", desc: "Blockchain Development" },
+                    { name: "Module 4", desc: "Blockchain Use Cases" },
+                ],
+                outcomes: [" Provide an overview of blockchain technologies",
+                "Define frequently used terms used in blockchain", 
+                "Define blockchain concepts such as public/private blockchain, smart contracts, tokens, etc.",
+                "Evaluate the various components of blockchain architecture",
+                "Discuss various considerations that are vital for architecture development Define frequently used terms used in blockchain architecture", 
+                "Identify popular blockchain tools and platforms", 
+                "Perform basic blockchain operations such querying blocks",
+                "Explain the uses of dApps",
+                "Discuss various blockchain use cases",
+                "Discuss how various industries are adopting blockchain use cases"]
+            },
+            {
+                id: 10,
+                title: "Certified Financial Fraud Investigator",
+                description: "Acquire specialized skills to investigate and prevent financial fraud across various sectors.",
+                duration: "Total 45 Hours",
+                overview: "The Certified Financial Fraud Investigator course is designed to train learners in identifying and investigating tinancia frauds in the banking sector. It emphasizes modern banking technologies, digital forensics and fraud analytics. Participants are introduced to a range of remittance systems, fraud types. and forensic practices using simulations and virtual labs.",
+                scope: "Understand the basics of instruments used in banking, Learn about general banking operations and digital banking, Identify and analyze various types of remittances",
+                objectives: "Detect and investigate different types of financial frauds, Gain exposure to digital forensics and cyber fraud prevention",
+                prerequisites: "Graduation in science, commerce, or leennology, Basic knowledge in computer operations, Good analytical and problem-solving skills, Comfortable with English language communication",
+                technologies: ["RTGS / NEFT / SWIFT / NACHA / IMPS (Remittance protocols)", "PIN & EMV, Card-based Security", "Digital Wallets, Mobile Banking Apps", "Biometric Authentication", "Digital Forensics Tools (for email & mobile forensics, process banking forensics)", "Security Controls for FinTech and Crypto-related channels"],
+                nos: "N0931",
+                nsqf: "Level 6",
+                jobRoles: ["Financial Fraud Investigator", "Digital Forensics Analyst", "Banking Security Analyst", "Risk and Compliance Officer", "Cybersecurity Auditor (specific to BFSI)", "Fraud Risk Consultant"],
+                modules: [
+                    { name: "Module 1", desc: "General Banking" },
+                    { name: "Module 2", desc: "Digital Banking (ATMs, Cards and Core Banking)" },
+                    { name: "Module 3", desc: "Remittances" },
+                    { name: "Module 4", desc: "Alternate Delivery Channels" },
+                    { name: "Module 5", desc: "Digital Forensics" },
+                ],
+                outcomes: ["Comprehensive knowledge of general and digital banking operations", 
+                "In-depth understanding of fraud types and detection techniques", 
+                "Practical skills in using forensic tools and procedures", 
+                "Awareness of cybersecurity measures and fraud prevention strategies", 
+                "Implement privacy strategies effectively in business environments", 
+                "Ability to clearly identify financial frauds and understand their impact in the BFSI industry"]
+            },
+            {
+                id: 11,
+                title: "IOT Architecture and Security Threat Management",
+                description: "Explore the architectural complexities of IoT systems and their associated security challenges.",
+                duration: "Total 45 hours",
+                overview: "This comprehensive course explores the critical aspects of securing Internet of Things (IoT) deployments. It covers topic such as managing access to loT assets, ensuring data and network security, equipping students with practical knowledge for designing, implementing & maintaining secure and resilient loT ecosystems. The course also delves into emerging trends and prepares learners for evolving challenges in the field of IoT security.",
+                scope: "The coverage spans from fundamental security principles to advanced topics like hardware security. network protection and cloud security for lot.",
+                objectives: "The course provides in-depth knowledge and skills related to securing loT systems, including both theoretical concepts and practical applications.",
+                prerequisites: "Familiarity with at least one programming language. Basic understanding and fundamentals of loT.",
+                technologies: ["Arduino IDE", "Shodan", "Node-RED", "OWASP IoTGoat", "Raspberry Pi", "Splunk", "ThingSpeak", "Graylog", "Wireshark", "Kali Linux", "Nmap"],
+                nos: "NO8227, N8231",
+                nsqf: "Level 6",
+                jobRoles: ["IoT Security Specialist", "Network Security Engineer", "Cybersecurity Analyst loT Architect", "Cloud Security Engineer"],
+                modules: [
+                    { name: "Module 1", desc: "Introduction to IoT Security"},
+                    { name: "Module 2", desc: "Defining Security Architecture for IoT"},
+                    { name: "Module 3", desc: "Hardware Security and Assets Management"},
+                    { name: "Module 4", desc: "Ensuring Data Security in IoT"},
+                    { name: "Module 5", desc: "Designing Network Security in IoT"},
+                    { name: "Module 6", desc: "Ensuring Cloud, Application and Platform Security"}
+                    ],
+                outcomes: ["Gain a deep understanding of IoT security challenges.", 
+                "Be proficient in managing IoT assets and securing loT data.", 
+                "Demonstrate skills in designing secure IoT networks and architectures.", 
+                "Equip themselves with the knowledge to secure cloud-based IoT services and platforms.", 
+                "Implement security-by-design principles in IoT projects."]
+            },
+            {
+                id: 12,
+                title: "Mastering the Art of Digital Forensics and Incident Response",
+                description: "Gain expertise in collecting, preserving, and analyzing digital evidence for forensics and incident resolution.",
+                duration: "Total 45 hours",
+                overview: "The Professional Training Program in Digital Forensics & Incident Response is designed to equip participants with the knowledge. Necessarily and effectively this comprehensive program provides a deep understanding of the principles, methodologies, and best practices in the digital forensics incident response. Throughout the program, participants will explore various aspects at digital forensics incident response.",
+                scope: "Understanding the cybersecurity landscape and its impact on organizations. Understand the principles and methodologies of digital forensics. Learn the fundamentals of incidence response and its role in cybersecurity",
+                objectives: "Acquire skills for detecting. responding to, and mitigating security incidents. Familiarize yourself with forensic investigation techniques and tools. Develop proficiency in analyzing network traffic and identifying malicious activity. Gain hands-on experience in examining digital devices and recovering digital evidences",
+                prerequisites: "Basic understanding of information technologies. Familiarity of with different operating systems like Windows, linux and MacOS.",
+                technologies: ["Kali Linux", "Autopsy", "Wireshark", "FTK Imager", "REMnux", "Network miner", "Volatility"],
+                nos: "N0929, N0930, N0931, N0932",
+                nsqf: "Level 6",
+                jobRoles: ["Digital Forensics Analyst", "Mobile Forensics Analyst", "Malware Analyst", "Live Forensics and Incident Responder", "Email Forensics Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Introduction to Digital Forensics" },
+                    { name: "Module 2", desc: "Computer Forensics Lab Essentials" },
+                    { name: "Module 3", desc: "Imaging and Cloning" },
+                    { name: "Module 4", desc: "Operating System & Its Components" },
+                    { name: "Module 5", desc: "Digital Forensic Concepts" },
+                    { name: "Module 6", desc: "Malware Forensics" },
+                    { name: "Module 7", desc: "Email Forensics" },
+                    { name: "Module 8", desc: "Windows Forensics" },
+                    { name: "Module 9", desc: "Linux Forensics" },
+                    { name: "Module 10", desc: "DFIR - Incident Response" },
+                    { name: "Module 11", desc: "Report Preparation" }
+                    
+                ],
+                outcomes: ["Understand the principles and methodologies of digital forensics and incident response.", 
+                "Develop incident response and management skills including planning, coordination, and communication.",
+                "Acquire practical skills for detecting, responding to, and mitigating security incidents.", 
+                "Enhance report writing and documentation skills for presenting forensic findings professionally.", 
+                "Learn techniques for evidence acquisition, preservation, and analysis in digital investigations.", 
+                "Stay updated on industry trends, emerging threats, and best practices in digital forensics", 
+                "Develop proficiency in using digital forensic tools and technologies", 
+                "Gain knowledge of network forensics and the ability to analyze network traffic for signs of intrusion or malicious activity.", "Understand fundamentals of malware analysis and the ability to identify and analyze malicious software.", "Learn web and mobile forensics techniques to investigate incidents and extract digital evidence. "]
+            },
+            {
+                id: 13,
+                title: "Certified Data Privact Analyst",
+                description: "Prepare for and conduct comprehensive information security audits.",
+                duration: "Total 45 Hours",
+                overview: "The Certified Data Privacy Analyst course provides an in-depth understanding of privacy and data protection, focusing on global regulations, privacy ethics, the role of privacy analysts, and strategies for implementing effective privacy programs. It explores emerging trends, societal expectations, and real-world case studies, equipping learners with the knowledge and skills needed to navigate the complex landscape of privacy and data protection in the digital age.",
+                scope: "Provide a comprehensive introduction to privacy and data protection. ErD size global privacy regulations, particularly GDPR and Indian. Offer insights into ethical, legal, and societal implications of privacy",
+                objectives: "Prepare learners for the role of Privacy Analysts and business leaders n data protection. Help develop and implement privacy strategies aligned with organizational goals.",
+                prerequisites: "No prior knowledge of privacy or data protection is required. Open to all students undergoing bachelor's or master's degrees across disciplines",
+                technologies: ["Quizzes, simulations, and case studies for practical learning", "* Privacy compliance frameworks (e.g., GDPR. DPDP Act)"],
+                nos: "N0917, N0918, N8336",
+                nsqf: "Level 5",
+                jobRoles: ["Data Privacy Analyst", "Privacy Compliance Officer", "Data Protection Officer", "Information Governance Analyst", "Risk and Compliance Consultant", "Cybersecurity Policy Analyst"],
+                modules: [
+                    { name: "Module 1", desc: "Basics of Privacy and Data Protection" },
+                    { name: "Module 2", desc: "Impact of Global Privacy Regulations on Business. (Detailed exploration of laws like GDPR and Indian DPDP Act)" },
+                    { name: "Module 3", desc: "Privacy Ethics and Society (Discussing ethical dilemmas and societal expectations)" },
+                    { name: "Module 4", desc: "Role and Responsibilities of the Privacy Analyst" },
+                    { name: "Module 5", desc: "Strategies for Implementing Privacy in Business" },
+                    { name: "Module 6", desc: "Privacy Case Studies and Lessons Learned" },
+                ],
+                outcomes: ["Grasp core principles of privacy and data protection", 
+                "Analyze global regulations like GDPR and Indian DPDP Act", 
+                "Evaluate ethical and societal impacts of data privacy", 
+                "Understand the roles and responsibilities of a privacy", 
+                "Implement privacy strategies effectively in business environments", 
+                "Develop a privacy policy, perform case study analysis, and engage in privacy-related decision-making"]
+            },
+            {
+                id: 14,
+                title: "Data Protection Officer",
+                description: "Develop the comprehensive knowledge required to fulfill the responsibilities of a Data Protection Officer (DPO) under privacy laws.",
+                duration: "Total 45 Hours",
+                overview: "The course is tailored to empower Data Protection Officers (DPOs) with in-depth knowledge and essential skills & expertise required for proficient management and processing of digital data inadherence to the Digital Personal Data Protection Act (DPDPA) 2025, and global data protection regulations. The program aims to provide participants a holistic understanding of the DPDP Act along with a comparative analysis of major international data protection laws.",
+                scope: "Ideal for security professionals, auditors, and compliance specialists who want to specialize in security auditing and assessment.",
+                objectives: "To develop security auditing skills, understand audit frameworks, and prepare students for security auditor roles.",
+                prerequisites: "Good understanding of cybersecurity concepts and information systems. Audit experience is beneficial.",
+                technologies: ["Audit Tools", "Compliance Frameworks", "Risk Assessment", "Security Testing", "Documentation Tools", "Audit Software"],
+                nos: "NOS-IT/SA-008",
+                nsqf: "Level 6",
+                jobRoles: ["Data Protection Officer (DPO)","Privacy Consultant / Advisor", "GRC Roles", "IT Security and Privacy Officer", "Legal and Regulatory Associate(Privacy Focused)"],
+                modules: [
+                    { name: "Module 1", desc: "Introduction to Privacy and Data Protection" },
+                    { name: "Module 2", desc: "Privacy Governance" },
+                    { name: "Module 3", desc: "Roles and Responsibilities of a DPO" },
+                    { name: "Module 4", desc: "Privacy by Design and Default" },
+                    { name: "Module 5", desc: "Risk Management in Data Protection" },
+                    { name: "Module 6", desc: "Privacy Case Studies and Lessons Learned" },
+                    { name: "Module 7", desc: "Record of Processing Activities (ROPA)" },
+                    { name: "Module 8", desc: "Global Data Protection Regulations" },
+                    { name: "Module 9", desc: "Privacy Policies and Notices" },
+                    { name: "Module 10", desc: "Employee Training and Awareness" },
+                    { name: "Module 11", desc: "Al in Data Privacy and Data Protection" },
+                    { name: "Module 12", desc: "Privacy Enhancing Technologies (PETS)" },
+                    { name: "Module 13", desc: "Data Breach Incident Response" },
+                    { name: "Module 14", desc: "Ethical Considerations in Data Protection" },
+                    { name: "Module 15", desc: "Ongoing Compliance and Monitoring" },
+                    { name: "Module 16", desc: "Indian Digital Personal Data Protection Act" },
+                ],
+                outcomes: ["Plan and execute security audits", 
+                "Assess security controls", 
+                "Evaluate compliance", 
+                "Create audit reports", 
+                "Recommend improvements"]
+            },
+        ]
+
+// Simulate API call for payment
+        function initiatePayment(courseTitle) {
+            alert(`Initiating payment for ${courseTitle}. (API call to a payment gateway)`);
+/*
+            fetch('/api/create-payment-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ courseTitle: courseTitle, amount: 'XYZ' }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl; // Redirect to payment gateway
+                } else {
+                    alert('Payment initiation failed.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during payment initiation.');
+            });
+*/
+        }
+
+// Populate courses on page load
+        function populateCourses() {
+            const coursesGrid = document.getElementById('courses-grid');
+            const courseDetails = document.getElementById('course-details');
+            
+            // Clear existing content
+            coursesGrid.innerHTML = '';
+            courseDetails.innerHTML = '';
+            
+            courses.forEach(course => {
+                // Create course card
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-image">${course.title}</div>
+                    <div class="course-title">${course.title}</div>
+                    <div class="course-description">${course.description}</div>
+                    <button class="enroll-btn" onclick="showCourseDetail(${course.id})">Learn More</button>
+                `;
+                coursesGrid.appendChild(courseCard);
+
+                // Create course detail page
+                const courseDetail = document.createElement('div');
+                courseDetail.className = 'course-detail';
+                courseDetail.id = `course-${course.id}`;
+                courseDetail.innerHTML = `
+                    <button class="back-btn" onclick="showHomePage()">← Back to Courses</button>
+                    
+                    <div class="course-header">
+                        <div class="course-detail-image">${course.title}</div>
+                        <div class="course-info">
+                            <h1 class="course-detail-title">${course.title}</h1>
+                            <div class="course-duration">${course.duration}</div>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Course Overview</h3>
+                        <p>${course.overview}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Scope & Objectives</h3>
+                        <p><strong>Scope:</strong> ${course.scope}</p>
+                        <p><strong>Objectives:</strong> ${course.objectives}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Prerequisites</h3>
+                        <p>${course.prerequisites}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Technologies & Protocols</h3>
+                        <ul>
+                            ${course.technologies.map(tech => `<li>${tech}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>NSQF Level</h3>
+                        <p>${course.nsqf}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Potential Job Roles</h3>
+                        <ul>
+                            ${course.jobRoles.map(role => `<li>${role}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Course Modules</h3>
+                        <div class="modules-grid">
+                            ${course.modules.map(module => `
+                                <div class="module-card">
+                                    <div class="module-title">${module.name}</div>
+                                    <div>${module.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Key Learning Outcomes</h3>
+                        <ul>
+                            ${course.outcomes.map(outcome => `<li>${outcome}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <button class="payment-btn" onclick="initiatePayment('${course.title}')">Enroll Now & Pay</button>
+                `;
+                courseDetails.appendChild(courseDetail);
+            });
+        }
+
+        // Show course detail page
+        function showCourseDetail(courseId) {
+            document.getElementById('home-page').style.display = 'none';
+            document.querySelectorAll('.course-detail').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            document.getElementById(`course-${courseId}`).classList.add('active');
+        }
+
+        // Show home page
+        function showHomePage() {
+            document.getElementById('home-page').style.display = 'block';
+            document.querySelectorAll('.course-detail').forEach(detail => {
+                detail.classList.remove('active');
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCourses();
+        });
+    </script>
+</body>
+</html>
