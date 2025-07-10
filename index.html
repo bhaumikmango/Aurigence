@@ -26,9 +26,9 @@
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;            
-            margin-bottom: 30px;
-            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 0px; 
+            padding: 0px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
@@ -36,8 +36,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
-            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         .logo {
@@ -48,26 +46,42 @@
             color: white;
             font-weight: bold;
             font-size: 24px;
-            box-shadow: 0 4px 20px rgba(128, 19, 19, 0.2);
+            box-shadow: 0 4px 20px rgba(255, 2, 2, 0.2);
         }
         
         .collaboration-text {
             font-size: 28px;
             font-weight: bold;
             color: #2c3e50;
-            margin: 20px 0;
+            margin: 10px;
         }
         .accreditation {
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px;
-            align-items: center;
-            justify-content: center;
+            padding: 0px;
+            border-radius: 0px;
+            max-width: 600px;
+            text-align: left;
+            margin-top: 0px;
         }
-        .accreditation h2 {
+        .accreditation-header {
+            display: flex;
+            align-items: left; 
+            justify-content: left;
+        }
+
+        .accreditation-header .logo {
+            width: 80px; 
+            height: auto;
+            border-radius: 0; 
+            box-shadow: none; 
+        }
+
+        .accreditation-header h2 {
             font-size: 24px;
-            margin-bottom: 10px;
+            margin: 0;
+            color: black;
+            white-space: nowrap;
+            padding: 30px 0;
         }
 /* Course Grid */
         .courses-section {
@@ -299,16 +313,18 @@
     <div class="container">
                 <div id="home-page">
             <header>
-                <div class="logo-section">
-                    <img src="Aurigence+SkillsDA.jpeg" alt="Logo" style="width: 250px; height: 250px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">
-                    
-                </div>
-                <div class="accreditation">
-                    <img src="AICTE Logo.png" alt="AICTE Logo" class="logo">
-                    <h2 style="display: block; margin: 0 auto; color: black; align-items: center;">AICTE Accredited Programs</h2>
-                    <p style="color: black;">All our courses are accredited by the All India Council for Technical Education (AICTE), ensuring industry-recognized certification and quality education standards.</p>
-                </div>
-            </header>
+                <div class="logo-section">
+                    <img src="Aurigence+SkillsDA.jpeg" alt="Logo" style="width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">
+                </div>
+                <div class="accreditation">
+                    <div class="accreditation-header">
+                        <img src="AICTE Logo.png" alt="AICTE Logo" class="logo">
+                        <h2>AICTE Accredited Programs</h2>
+                    </div>
+                    <p style="color: black;">All our courses are accredited by the All India Council for Technical Education (AICTE), ensuring industry-recognized certification and quality education standards.</p>
+                </div>
+            </header>
+
 
             <div class="courses-section">
                 <h2 class="section-title">Our Professional Courses</h2>
