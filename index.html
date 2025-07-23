@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurigence Tech Courses</title>
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurigence Tech Courses</title>
+  <link rel="icon" type="image/png" href="Aurigence logo without background.png">
+  <style>
         * {
             margin: 0;
             padding: 0;
@@ -301,7 +302,17 @@
             height: 70px;
             background-color: black;
         }
-
+        .course-detail {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .course-detail.active {
+            display: block;
+        }
 /* Responsive Design */
 @media (max-width: 768px) {
     .logo-section {
@@ -352,29 +363,43 @@
         font-size: 20px;
     }
 }
-    </style>
+  </style>
 </head>
 <body>
-    <div class="container">
-                <div id="home-page">
-                <div class="logo-section">
-                    <img src="Aurigence logo without background.png" alt="Logo" style="width: 200px; height: 155px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 24px;">
-                </div>  
-            <div class="courses-section">
-                <h2 class="section-title">Our IT Domain Courses</h2>
-                <div class="courses-grid" id="courses-grid">
-                                    
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Home Page View -->
+    <div id="home-page">
+      <div class="logo-section">
+        <img src="Aurigence logo without background.png" alt="Logo" style="width: 200px; height: 155px;" />
+      </div>
 
-                <div id="course-details">
-                    </div>
+      <div class="courses-section">
+        <h2 class="section-title">Our IT Domain Courses</h2>
+        <div class="courses-grid" id="courses-grid"></div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 40px; margin-top: 30px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <img src="AICTE Logo.png" alt="AICTE Logo" style="height: 70px;" />
+          <div class="vertical-line"></div>
+          <img src="futureskills.png" alt="futureskills Logo" style="height: 60px;" />
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-left: auto;">
+          <span style="font-weight: bold; font-size: 16px;">Powered by:</span>
+          <img src="skillsDA logo.png" alt="skillsDA Logo" style="height: 60px;" />
+        </div>
+      </div>
+
+      <h2 style="color: black; margin-top: 10px; padding-left: 40px;">AICTE Accredited Programs</h2>
     </div>
 
-    <script>
-        // Course data
-        const courses = [
+    <!-- Course Detail View -->
+    <div id="course-detail" class="course-detail"></div>
+  </div>
+
+
+  <script>
+    const courses = [
             {
                 id: 1,
                 title: "Foundational Course in Cyber Security",
@@ -802,189 +827,99 @@
                 "Create audit reports", 
                 "Recommend improvements"]
             },
-        ]
-
-// Simulate API call for payment
-function initiatePayment(courseTitle) {
-alert(`Initiating payment for ${courseTitle}. (API call to a payment gateway)`);
-/*
-            fetch('/api/create-payment-session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ courseTitle: courseTitle, amount: 'XYZ' }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl; // Redirect to payment gateway
-                } else {
-                    alert('Payment initiation failed.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred during payment initiation.');
-            });
-*/
-}
+        ];
 
 
-// Populate courses on page load
-        const coursesGrid = document.getElementById('courses-grid');
-        const homePage = document.getElementById('home-page');
-        const courseDetailsPage = document.getElementById('course-details');
+    const coursesGrid = document.getElementById('courses-grid');
+    const homePage = document.getElementById('home-page');
+    const courseDetailsPage = document.getElementById('course-detail');
 
-        // Function to render course cards
-        function renderCourseCards() {
-            coursesGrid.innerHTML = ''; // Clear existing cards
-            courses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.classList.add('course-card');
-                courseCard.dataset.id = course.id; // Store course ID for easy access
+    function renderCourseCards() {
+      coursesGrid.innerHTML = '';
+      courses.forEach(course => {
+        const card = document.createElement('div');
+        card.classList.add('course-card');
+        card.dataset.id = course.id;
+        card.innerHTML = `
+          <img src="${course.imagePath}" class="course-image" alt="${course.title}">
+          <div class="course-title">${course.title}</div>
+          <p class="course-description">${course.description}</p>
+          <button class="enroll-btn" data-id="${course.id}">View Details</button>
+        `;
+        coursesGrid.appendChild(card);
+      });
 
-                courseCard.innerHTML = `
-                    <img src="${course.imagePath}" alt="${course.title} Course Cover" class="course-image">
-                    <div class="course-title">${course.title}</div>
-                    <p class="course-description">${course.description}</p>
-                    <button class="enroll-btn" data-id="${course.id}">View Details</button>
-                `;
-                coursesGrid.appendChild(courseCard);
-            });
+      document.querySelectorAll('.enroll-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = parseInt(e.target.dataset.id);
+          showCourseDetails(id);
+        });
+      });
+    }
 
-            // Add event listeners to "View Details" buttons
-            document.querySelectorAll('.enroll-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent card click from firing as well
-                    const courseId = parseInt(event.target.dataset.id);
-                    showCourseDetails(courseId);
-                });
-            });
+    function showCourseDetails(id) {
+      const course = courses.find(c => c.id === id);
+      if (!course) return;
 
-            // Add event listeners to the course cards themselves
-            document.querySelectorAll('.course-card').forEach(card => {
-                card.addEventListener('click', (event) => {
-                    const courseId = parseInt(card.dataset.id);
-                    showCourseDetails(courseId);
-                });
-            });
-        }
+      courseDetailsPage.innerHTML = `
+        <button class="back-btn" id="back-to-home">&larr; Back to All Courses</button>
+        <div class="course-header">
+          <img src="${course.imagePath}" class="course-detail-image" alt="${course.title}">
+          <div class="course-info">
+            <h2 class="course-detail-title">${course.title}</h2>
+            <span class="course-duration">${course.duration}</span>
+            <p>${course.description}</p>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3>Course Overview</h3>
+          <p>${course.overview}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Scope</h3>
+          <p>${course.scope}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Objectives</h3>
+          <p>${course.objectives}</p>
+        </div>
+        <div class="detail-section">
+          <h3>Technologies Covered</h3>
+          <ul>${course.technologies.map(t => `<li>${t}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-section">
+          <h3>Job Roles</h3>
+          <ul>${course.jobRoles.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-section">
+          <h3>Modules</h3>
+          <div class="modules-grid">
+            ${course.modules.map(m => `<div class="module-card"><div class="module-title">${m.name}</div><p>${m.desc}</p></div>`).join('')}
+          </div>
+        </div>
+        <div class="detail-section">
+          <h3>Outcomes</h3>
+          <ul>${course.outcomes.map(o => `<li>${o}</li>`).join('')}</ul>
+        </div>
+        <button class="payment-btn">Enroll Now</button>
+      `;
 
-        // Function to display course details
-        function showCourseDetails(id) {
-            const course = courses.find(c => c.id === id);
-            if (!course) {
-                console.error("Course not found for ID:", id);
-                return;
-            }
+      homePage.style.display = 'none';
+      courseDetailsPage.classList.add('active');
+      courseDetailsPage.style.display = 'block';
 
-            // Corrected the `modules-grid` column count for better display
-            courseDetailsPage.innerHTML = `
-                <button class="back-btn" id="back-to-home">Back to Courses</button>
-                <div class="course-header">
-                    <img src="${course.imagePath}" alt="${course.title} Course Cover" class="course-detail-image">
-                    <div class="course-info">
-                        <h2 class="course-detail-title">${course.title}</h2>
-                        <span class="course-duration">${course.duration}</span>
-                        <p style="margin-top: 15px;">${course.description}</p>
-                    </div>
-                </div>
-                <div class="detail-section">
-                    <h3>Course Overview</h3>
-                    <p>${course.overview}</p>
-                </div>
+      document.getElementById('back-to-home').addEventListener('click', () => {
+        homePage.style.display = 'block';
+        courseDetailsPage.classList.remove('active');
+        courseDetailsPage.style.display = 'none';
+      });
 
-                <div class="detail-section">
-                    <h3>Scope</h3>
-                    <p>${course.scope}</p>
-                </div>
+      document.querySelector('.payment-btn').addEventListener('click', () => {
+        alert(`Initiating payment for ${course.title}`);
+      });
+    }
 
-                <div class="detail-section">
-                    <h3>Objectives</h3>
-                    <p>${course.objectives}</p>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Prerequisites</h3>
-                    <ul>
-                        ${Array.isArray(course.prerequisites) ? course.prerequisites.map(p => `<li>${p}</li>`).join('') : `<li>${course.prerequisites}</li>`}
-                    </ul>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Technologies Covered</h3>
-                    <ul>
-                        ${course.technologies.map(tech => `<li>${tech}</li>`).join('')}
-                    </ul>
-                </div>
-
-                <div class="detail-section">
-                    <h3>NOS & NSQF Alignment</h3>
-                    <p><strong>NOS:</strong> ${course.nos}</p>
-                    <p><strong>NSQF Level:</strong> ${course.nsqf}</p>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Potential Job Roles</h3>
-                    <ul>
-                        ${course.jobRoles.map(role => `<li>${role}</li>`).join('')}
-                    </ul>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Course Modules</h3>
-                    <div class="modules-grid">
-                        ${course.modules.map(module => `
-                            <div class="module-card">
-                                <div class="module-title">${module.name}</div>
-                                <p>${module.desc}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <div class="detail-section">
-                    <h3>Learning Outcomes</h3>
-                    <ul>
-                        ${course.outcomes.map(outcome => `<li>${outcome}</li>`).join('')}
-                    </ul>
-                </div>
-
-                <button class="payment-btn">Enroll Now</button>
-            `;
-
-            homePage.style.display = 'none';
-            courseDetailsPage.classList.add('active');
-
-            // Add event listener for the payment button on the detail page
-            document.querySelector('.payment-btn').addEventListener('click', () => {
-                initiatePayment(course.title);
-            });
-
-            document.getElementById('back-to-home').addEventListener('click', () => {
-                homePage.style.display = 'block';
-                courseDetailsPage.classList.remove('active');
-            });
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', renderCourseCards);
-
-</script>
-
-<div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 40px; margin-top: 30px;">
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <img src="AICTE Logo.png" alt="AICTE Logo" style="height: 70px;">
-        <div class="vertical-line"></div>
-        <img src="futureskills.png" alt="futureskills Logo" style="height: 60px;">
-    </div>
-
-    <div style="display: flex; align-items: center; gap: 10px; margin-left: auto;">
-        <span style="font-weight: bold; font-size: 16px;">Powered by:</span>
-        <img src="skillsDA logo.png" alt="skillsDA Logo" style="height: 60px;">
-    </div>
-</div>
-<h2 style="color: black; margin-top: 10px; padding-left: 40px;">AICTE Accredited Programs</h2>
+    document.addEventListener('DOMContentLoaded', renderCourseCards);
+  </script>
 </body>
 </html>
